@@ -2,17 +2,17 @@
 use std::io;
 use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
 mod routes;
+use routes::agreement::{get_agreement, save_agreement};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
-            .service(
-                web::scope("/routes")
-                        .service(routes::add)
+            .service(web::scope("/agreement")
+                    .service(get_agreement)
+                    .service(save_agreement)
             )
             .service(hello)
-            .service(echo)
     })
     .bind(("127.0.0.1", 8080))?
     .run()
@@ -21,10 +21,5 @@ async fn main() -> std::io::Result<()> {
 
 #[get("/")]
 async fn hello() -> impl Responder {
-    HttpResponse::Ok().body("Hello world Vikas!")
-}
-
-#[post("/echo")]
-async fn echo(req_body: String) -> impl Responder {
-    HttpResponse::Ok().body(req_body)
+    return HttpResponse::Ok().body("Home Page");
 }

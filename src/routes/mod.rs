@@ -1,7 +1,9 @@
 
-use actix_web::{get, HttpResponse, Responder};
+pub mod agreement;
+use actix_web::{get, post, HttpResponse, Responder, web, Result};
+use serde::Serialize;
 
 #[get("/")]
-pub async fn add() -> impl Responder {
-    HttpResponse::Ok().body("SERVER IS UP")
+async fn hello() -> impl Responder {
+    return HttpResponse::Ok().body("Agreement Server is up");
 }
