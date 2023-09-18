@@ -2,6 +2,8 @@
 use std::io;
 use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
 mod routes;
+mod database;
+use database::{lib, schema, models};
 use routes::agreement::{get_agreement, save_agreement};
 
 #[actix_web::main]
