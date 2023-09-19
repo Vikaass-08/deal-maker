@@ -4,18 +4,18 @@ use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
 mod routes;
 mod database;
 use database::{lib, schema, models};
-use routes::agreement::{get_agreement, save_agreement};
-use routes::users::{create_user};
+use routes::document::{get_document, save_document};
+use routes::borrower::{create_user};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
-            .service(web::scope("/agreement")
-                    .service(get_agreement)
-                    .service(save_agreement)
+            .service(web::scope("/document")
+                    .service(get_document)
+                    .service(save_document)
             )
-            .service(web::scope("/user")
+            .service(web::scope("/borrower")
                     .service(create_user)
           )
             .service(hello)

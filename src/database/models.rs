@@ -1,49 +1,97 @@
-use crate::schema::agreement;
+use crate::schema::{users, lender, document, deal};
 use diesel::prelude::*;
 use serde::{Serialize, Deserialize};
-use crate::schema::users;
 use diesel::sql_types::*;
+use std::time::SystemTime;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #[derive(Queryable, Selectable, Serialize, Deserialize, Debug)]
-#[diesel(table_name = agreement)]
+#[diesel(table_name = document)]
 #[diesel(check_for_backend(diesel::pg::Pg))]
-pub struct Agreement {
-  pub agreement_id: i32,
-  pub agreement_data: String,
-  pub agreement_type: String
+pub struct Document {
+  pub id: i32,
+  pub lender_id: i32,
+  pub document_type: String,
+  pub document_data: String,
+  pub updated_at: SystemTime
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct AgreementList {
-  pub agreements: Vec<Agreement>
+pub struct DocumentList {
+  pub documents: Vec<Document>
 }
 
 
 #[derive(Insertable)]
-#[diesel(table_name = agreement)]
-pub struct NewAgreement<'a> {
-    pub agreement_data: &'a str,
-    pub agreement_type: &'a str,
+#[diesel(table_name = document)]
+pub struct NewDocument<'a> {
+    pub document_data: &'a str,
+    pub document_type: &'a str,
+    pub lender_id: &'a i32
 }
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #[derive(Queryable, Selectable, Serialize, Deserialize, Debug)]
 #[diesel(table_name = users)]
 #[diesel(check_for_backend(diesel::pg::Pg))]
-pub struct User {
-  pub user_id: i32,
+pub struct Users {
+  pub id: i32,
   pub first_name: String,
   pub last_name: String,
-  pub user_type: String,
-  pub user_email: String
+  pub email: String,
+  pub created_at: SystemTime
 }
 
 #[derive(Insertable)]
 #[diesel(table_name = users)]
-pub struct NewUser<'a> {
+pub struct NewUsers<'a> {
     pub first_name: &'a str,
     pub last_name: &'a str,
-    pub user_type: &'a str,
-    pub user_email: &'a str,
+    pub email: &'a str,
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+
+#[derive(Queryable, Selectable, Serialize, Deserialize, Debug)]
+#[diesel(table_name = lender)]
+#[diesel(check_for_backend(diesel::pg::Pg))]
+pub struct Lender {
+  pub id: i32,
+  pub org_name: String,
+  pub email: String,
+  pub created_at: SystemTime
+}
+
+#[derive(Insertable)]
+#[diesel(table_name = lender)]
+pub struct NewLender<'a> {
+    pub org_name: &'a str,
+    pub email: &'a str,
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+
+#[derive(Queryable, Selectable, Serialize, Deserialize, Debug)]
+#[diesel(table_name = deal)]
+#[diesel(check_for_backend(diesel::pg::Pg))]
+pub struct Deal {
+  pub id: i32,
+  pub lender_id: i32,
+  pub user_id: i32,
+  pub document_id: i32,
+  pub status: String,
+  pub updated_at: SystemTime
+}
+
+#[derive(Insertable)]
+#[diesel(table_name = deal)]
+pub struct NewDeal<'a> {
+    pub lender_id: &'a i32,
+    pub user_id: &'a i32,
+    pub document_id: &'a i32,
+    pub status: &'a str,
 }

@@ -36,20 +36,20 @@ To run this project, you will need to add the following environment variables to
 #### Creat a User
 
 ```http
-  POST /user/create-user
+  POST borrower/create
 ```
 
-#### Get agreement
+#### Get document
 
 ```http
-  GET /agreement/get
+  GET /document/get
 ```
 
 
-#### Create/Save agreement
+#### Create/Save document
 
 ```http
-  POST /agreement/save
+  POST /document/create
 ```
 
 ## Codebase Structure

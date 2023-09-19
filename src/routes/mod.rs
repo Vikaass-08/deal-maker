@@ -1,8 +1,8 @@
 
 use actix_web::{get, post, HttpResponse, Responder, web, Result};
 use serde::Serialize;
-pub mod agreement;
-pub mod users;
+pub mod document;
+pub mod borrower;
 
 #[get("/")]
 async fn hello() -> impl Responder {
