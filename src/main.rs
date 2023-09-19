@@ -5,6 +5,7 @@ mod routes;
 mod database;
 use database::{lib, schema, models};
 use routes::agreement::{get_agreement, save_agreement};
+use routes::users::{create_user};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -14,6 +15,9 @@ async fn main() -> std::io::Result<()> {
                     .service(get_agreement)
                     .service(save_agreement)
             )
+            .service(web::scope("/user")
+                    .service(create_user)
+          )
             .service(hello)
     })
     .bind(("127.0.0.1", 8080))?

@@ -3,12 +3,6 @@ use diesel::pg::PgConnection;
 use dotenv::dotenv;
 use std::env;
 
-use crate::schema::agreement;
-use crate::models;
-
-
-use self::models::{NewAgreement, Agreement};
-
 pub fn establish_connection() -> PgConnection {
 	dotenv().ok();
 

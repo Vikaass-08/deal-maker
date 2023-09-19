@@ -7,19 +7,13 @@ use self::models::{NewAgreement, Agreement, AgreementList};
 use serde::{Serialize, Deserialize};
 use crate::lib::establish_connection;
 
-#[derive(Serialize)]
-pub struct Response <T> {
-  pub status: T,
-  pub code: String
-}
-
-pub fn create_agreement_query(agreement_data: &str, data_type: &str) -> Result<Agreement, String> {
-  use crate::schema::agreement;
+pub fn create_agreement_query(agree_data: &str, agree_type: &str) -> Result<Agreement, String> {
+  use crate::schema::agreement::dsl::*;
   let conn = &mut establish_connection();
 
-  let new_agreement = NewAgreement { agreement_data, data_type };
+  let new_agreement = NewAgreement { agreement_data: agree_data, agreement_type: agree_type };
 
-  let output = diesel::insert_into(agreement::table)
+  let output = diesel::insert_into(agreement)
       .values(&new_agreement)
       .returning(Agreement::as_returning())
       .get_result(conn);
@@ -40,14 +34,14 @@ pub fn get_agreement_query() -> Result<AgreementList, String> {
       .expect("Error loading agreement");
 
   if total_agreement.len() == 0{
-    println!("\n No employees to display!! \n ");
+    println!("\n No agreement to display!! \n ");
     return Err(String::from("404"));
   }
 
   let results = agreement
-         .order(id)
+         .order(agreement_id)
          .limit(10.into())
          .load::<Agreement>(conn)
-         .expect("Error loading employees");
+         .expect("Error loading agreements");
   return Ok(AgreementList {agreements: results});
 }

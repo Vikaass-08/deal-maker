@@ -1,13 +1,12 @@
-version: '3'
-services:
-  book-api:
-    build: .
-    ports:
-      - "5432:5432"
+version: '3.5'
 
-  db:
+services:
+  postgres:
+    container_name: postgres_setup
     image: postgres:latest
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: dealmaker
       POSTGRES_DB: dealMakerPostgresDB
+    ports:
+      - "5432:5432"

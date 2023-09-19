@@ -18,7 +18,7 @@ pub async fn get_agreement() -> Result<impl Responder> {
 
 #[post("/save")]
 pub async fn save_agreement(req: web::Json<Agreement>) -> Result<impl Responder> {
-  let save_agreement:Result<Agreement, String> = create_agreement_query(&req.agreement_data.to_string(), &req.data_type.to_string());
+  let save_agreement:Result<Agreement, String> = create_agreement_query(&req.agreement_data.to_string(), &req.agreement_type.to_string());
 
   match save_agreement {
       Ok(value) => return Ok(web::Json(value)),
