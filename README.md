@@ -3,8 +3,8 @@
 
 - It is a premier backend solution dedicated to optimizing the document signing process for lenders and borrowers. 
 - There are 2 kinds of user (BORROWER, LENDER). 
-- Lender can create and make changes in the documents (Before Siging), accept document signing request from a borrower.
-- Borrowers can apply for document Signing for any lenders, once accepted then the siging process takes place.
+- Lender can create and make changes in the documents (Before Signing), accept document signing request from a borrower.
+- Borrowers can apply for document Signing for any lenders, once accepted then the signing process takes place.
 
 
 ## Environment Variables
@@ -20,6 +20,8 @@ To run this project, you will need to add the following environment variables to
 - create docker-compose.yml 
 - docker-compose -f docker-compose.yml up -d   (TO create docker image and run in the background)
 - docker stop container_name
+
+    <img width="700" height="500" alt="Screenshot 2023-09-20 at 12 25 40 AM" src="https://github.com/Vikaass-08/deal-maker/assets/59832889/53593624-1e4f-47b3-a17d-fffc489ec8d0">
 
 ## Commands to run 
 
