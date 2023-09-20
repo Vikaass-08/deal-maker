@@ -6,14 +6,7 @@ use serde::{Serialize, Deserialize};
 
 use crate::database::models::{Document, NewDocument, DocumentList};
 use crate::database::queries::document_queries::{get_document_query, create_document_query};
-
-
-#[derive(Serialize, Deserialize)]
-pub struct SaveDocumentReq {
-    pub document_data: String,
-    pub document_type: String,
-    pub lender_id: i32
-}
+use crate::types::SaveDocumentReq;
 
 #[get("/get")]
 pub async fn get_document() -> Result<impl Responder> {

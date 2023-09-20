@@ -6,8 +6,9 @@ use crate::models;
 use self::models::{Users, NewUsers};
 use serde::{Serialize, Deserialize};
 use crate::lib::establish_connection;
+use crate::types::CreateUserReq;
 
-pub fn create_user_query(user_data: &Users) -> Result<Users, String> {
+pub fn create_user_query(user_data: &CreateUserReq) -> Result<Users, String> {
 	use crate::schema::users::dsl::*;
 	let conn = &mut establish_connection();
 

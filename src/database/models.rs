@@ -2,7 +2,7 @@ use crate::schema::{users, lender, document, deal};
 use diesel::prelude::*;
 use serde::{Serialize, Deserialize};
 use diesel::sql_types::*;
-use std::time::SystemTime;
+use chrono::NaiveDateTime;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -14,7 +14,7 @@ pub struct Document {
   pub lender_id: i32,
   pub document_type: String,
   pub document_data: String,
-  pub updated_at: SystemTime
+  pub updated_at: NaiveDateTime
 }
 
 #[derive(Serialize, Deserialize)]
@@ -42,7 +42,7 @@ pub struct Users {
   pub first_name: String,
   pub last_name: String,
   pub email: String,
-  pub created_at: SystemTime
+  pub created_at: NaiveDateTime
 }
 
 #[derive(Insertable)]
@@ -63,7 +63,7 @@ pub struct Lender {
   pub id: i32,
   pub org_name: String,
   pub email: String,
-  pub created_at: SystemTime
+  pub created_at: NaiveDateTime
 }
 
 #[derive(Insertable)]
@@ -84,7 +84,7 @@ pub struct Deal {
   pub user_id: i32,
   pub document_id: i32,
   pub status: String,
-  pub updated_at: SystemTime
+  pub updated_at: NaiveDateTime
 }
 
 #[derive(Insertable)]

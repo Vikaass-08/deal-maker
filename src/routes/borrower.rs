@@ -5,23 +5,11 @@ use serde::{Serialize, Deserialize};
 
 use crate::database::models::{Users, NewUsers};
 use crate::database::queries::users_queries::create_user_query;
+use crate::types::CreateUserReq;
 
-pub enum UserType {
-    LENDER,
-    BORROWER
-}
-
-impl UserType {
-    fn to_string(&self) -> &str {
-        match &self {
-            Self::LENDER => "LENDER",
-            Self::BORROWER => "BORROWER"
-        }
-    }
-}
 
 #[post("/create")]
-pub async fn create_user(req: web::Json<Users>) -> Result<impl Responder> {
+pub async fn create_user(req: web::Json<CreateUserReq>) -> Result<impl Responder> {
 
   let create_user:Result<Users, String> = create_user_query(&req);
   match create_user {

@@ -6,6 +6,7 @@ mod database;
 use database::{lib, schema, models};
 use routes::document::{get_document, save_document};
 use routes::borrower::{create_user};
+pub mod types;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
