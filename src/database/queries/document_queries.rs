@@ -6,8 +6,6 @@ use self::models::{NewDocument, Document, DocumentList, Lender};
 use serde::{Serialize, Deserialize};
 use crate::lib::establish_connection;
 
-use super::schema::deal::user_id;
-
 pub fn create_document_query(doc_data: &str, doc_type: &str, len_id: &i32) -> Result<Document, String> {
   use crate::schema::document;
   use crate::schema::lender;

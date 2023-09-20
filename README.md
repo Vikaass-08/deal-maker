@@ -11,7 +11,7 @@
 
 To run this project, you will need to add the following environment variables to your .env file
 
-`DATABASE_URL`
+`DATABASE_URL` : `postgres://postgres:password@localhost/db_name`
 
 
 ## Postgres DB images through Docker

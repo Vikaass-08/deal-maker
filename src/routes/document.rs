@@ -5,7 +5,7 @@ use actix_web::{get, post, HttpResponse, Responder, web, Result, error};
 use serde::{Serialize, Deserialize};
 
 use crate::database::models::{Document, NewDocument, DocumentList};
-use crate::database::document_queries::{get_document_query, create_document_query};
+use crate::database::queries::document_queries::{get_document_query, create_document_query};
 
 
 #[derive(Serialize, Deserialize)]

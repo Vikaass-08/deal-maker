@@ -4,7 +4,7 @@ use actix_web::{get, post, HttpResponse, Responder, web, Result, error};
 use serde::{Serialize, Deserialize};
 
 use crate::database::models::{Users, NewUsers};
-use crate::database::users_queries::create_user_query;
+use crate::database::queries::users_queries::create_user_query;
 
 pub enum UserType {
     LENDER,
