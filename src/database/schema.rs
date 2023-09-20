@@ -30,6 +30,8 @@ diesel::table! {
         org_name -> Varchar,
         #[max_length = 255]
         email -> Varchar,
+        #[max_length = 255]
+        password -> Varchar,
         created_at -> Timestamp,
     }
 }
@@ -43,6 +45,8 @@ diesel::table! {
         last_name -> Varchar,
         #[max_length = 255]
         email -> Varchar,
+        #[max_length = 255]
+        password -> Varchar,
         created_at -> Timestamp,
     }
 }

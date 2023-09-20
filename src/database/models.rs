@@ -42,6 +42,7 @@ pub struct Users {
   pub first_name: String,
   pub last_name: String,
   pub email: String,
+  pub password: String,
   pub created_at: NaiveDateTime
 }
 
@@ -51,6 +52,7 @@ pub struct NewUsers<'a> {
     pub first_name: &'a str,
     pub last_name: &'a str,
     pub email: &'a str,
+    pub password: &'a str
 }
 
 
@@ -63,6 +65,7 @@ pub struct Lender {
   pub id: i32,
   pub org_name: String,
   pub email: String,
+  pub password: String,
   pub created_at: NaiveDateTime
 }
 
@@ -71,6 +74,7 @@ pub struct Lender {
 pub struct NewLender<'a> {
     pub org_name: &'a str,
     pub email: &'a str,
+    pub password: &'a str
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 

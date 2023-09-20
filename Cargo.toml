@@ -12,3 +12,10 @@ chrono = { version = "0.4.31", features = ["serde"] }
 diesel = { version = "2.1.0", features = ["postgres", "chrono"] }
 dotenv = "0.15.0"
 r2d2 = "0.8.9"
+
+# DEPENDENCIES SPECIFIC TO AUTH
+actix-web-httpauth = "0.8.1"
+argonautica = "0.2.0"
+hmac = "0.12.1"
+jwt = "0.16.0"
+sha2 = "0.10.7"

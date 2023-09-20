@@ -7,13 +7,6 @@
 - Borrowers can apply for document Signing for any lenders, once accepted then the signing process takes place.
 
 
-## Environment Variables
-
-To run this project, you will need to add the following environment variables to your .env file
-
-`DATABASE_URL` : `postgres://postgres:password@localhost/db_name`
-
-
 ## Postgres DB images through Docker
 
 - Download docker desktop
@@ -23,6 +16,17 @@ To run this project, you will need to add the following environment variables to
 
     <img width="700" height="500" alt="Screenshot 2023-09-20 at 12 25 40 AM" src="https://github.com/Vikaass-08/deal-maker/assets/59832889/53593624-1e4f-47b3-a17d-fffc489ec8d0">
 
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+- `DATABASE_URL` : `postgres://postgres:password@localhost/db_name`
+- `JWT_SECRET_USER`
+- `HASH_SECRET`
+- `JWT_SECRET_LENDER`
+
+
 ## Commands to run 
 
 - diesel setup
@@ -31,14 +35,57 @@ To run this project, you will need to add the following environment variables to
 - cargo build
 - cargo run
 
+- diesel migration revert (used to redo the applied migration)
+
+
+## Codebase Structure
+
+- diesel setup (create a diesel.toml file)
+    - This file contains migration directory and schema location (you can change the location of dir).
+- diesel migration generate table_name (This we create a table migration)
+- Inside src/database
+    - schema.rs (It we be auto generated while generating migration)
+    - models.rs (models types in native rust)
+    - lib.rs (creating a pool, to connect to db and run queries)
+    - queries file (seperate files for seperate table queries)
+- Inside src/routes (handlers based on endpoints and request)
+- main.rs (handlers mapping based on url and start of the project)
+
+
+
+## JWT Auth
+
+- import all the dependencies
+- create 2 Tokens (Lender, Borrower)
+- validator_lender, validator_user (Used to verify token)
+- need to pass token during request (Bearer Token)
+
 
 
 ## API Reference
 
-#### Creat a User
+#### Create a borrower account
 
 ```http
   POST borrower/create
+```
+
+#### Create a Lender account
+
+```http
+  POST lender/create
+```
+
+#### Login as borrower
+
+```http
+  POST borrower/login
+```
+
+#### login as Lender
+
+```http
+  POST lender/login
 ```
 
 #### Get document
@@ -53,16 +100,3 @@ To run this project, you will need to add the following environment variables to
 ```http
   POST /document/create
 ```
-
-## Codebase Structure
-
-- diesel setup (create a diesel.toml file)
-    - This file contains migration directory and schema location (you can change the location of dir).
-- diesel migration generate table_name (This we create a table migration)
-- Inside src/database
-    - schema.rs (It we be auto generated while generating migration)
-    - models.rs (models types in native rust)
-    - lib.rs (creating a pool, to connect to db and run queries)
-    - queries file (seperate files for seperate table queries)
-- Inside src/routes (handlers based on endpoints and request)
-- main.rs (handlers mapping based on url and start of the project)
