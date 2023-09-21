@@ -8,7 +8,7 @@ use crate::database::queries::document_request_queries::{document_request_status
 
 
 
-#[post("/borrower/get-or-create-req")]
+#[post("/get-or-create-req")]
 pub async fn user_doc_request_status(req: web::Json<DocumentRequestUsersAPIReq>, token_verify: Option<web::ReqData<TokenClaims>>) -> Result<impl Responder> {
   match token_verify {
     Some(user) => {
@@ -25,7 +25,7 @@ pub async fn user_doc_request_status(req: web::Json<DocumentRequestUsersAPIReq>,
 
 
 
-#[get("/lender/get-all-request")]
+#[get("/get-all-request")]
 pub async fn lender_doc_request_status(req: web::Json<DocumentRequestLenderAPIReq>, token_verify: Option<web::ReqData<TokenClaims>>) -> Result<impl Responder> {
   match token_verify {
     Some(user) => {
@@ -43,7 +43,7 @@ pub async fn lender_doc_request_status(req: web::Json<DocumentRequestLenderAPIRe
 
 
 
-#[post("/lender/updateRequest")]
+#[post("/update-request")]
 pub async fn lender_update_doc_status(req: web::Json<DocumentRequestLenderAPIReq>, token_verify: Option<web::ReqData<TokenClaims>>) -> Result<impl Responder> {
   match token_verify {
     Some(user) => {

@@ -66,36 +66,48 @@ To run this project, you will need to add the following environment variables to
 #### Create a borrower account
 
 ```http
-  POST borrower/create
+  POST create-borrower
 ```
 
 #### Create a Lender account
 
 ```http
-  POST lender/create
+  POST /create-lender
 ```
 
 #### Login as borrower
 
 ```http
-  POST borrower/login
+  POST /login-borrower
 ```
 
 #### login as Lender
 
 ```http
-  POST lender/login
-```
-
-#### Get document
-
-```http
-  GET /document/get
+  POST /login-lender
 ```
 
 
 #### Create/Save document
 
 ```http
-  POST /document/create
+  POST /lender/auth/create-document
+```
+
+#### Create/Get the document request status
+
+```http
+  POST /borrower/auth/get-or-create-req
+```
+
+#### Get the request send by borrower to lender
+
+```http
+  GET /lender/auth/get-all-request
+```
+
+#### Update the request send by borrower to lender
+
+```http
+  PUT /lender/auth/update-request
 ```
