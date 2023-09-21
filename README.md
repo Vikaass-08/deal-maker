@@ -14,8 +14,7 @@
 - docker-compose -f docker-compose.yml up -d   (TO create docker image and run in the background)
 - docker stop container_name
 
-    <img width="700" height="500" alt="Screenshot 2023-09-20 at 12 25 40 AM" src="https://github.com/Vikaass-08/deal-maker/assets/59832889/53593624-1e4f-47b3-a17d-fffc489ec8d0">
-
+    <img width="700" height="500" alt="Database Structure" src="https://github.com/Vikaass-08/deal-maker/assets/59832889/23d752f8-2f88-40c8-a69b-bd1dda9e4b5a">
 
 ## Environment Variables
 
