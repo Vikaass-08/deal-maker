@@ -8,7 +8,7 @@ use crate::database::queries::lender_queries::{create_lender_query, login_lender
 use crate::types::{CreateLenderReq, LoginLenderReq, LoginLenderResp, CreateLenderResp};
 
 
-#[post("/create")]
+#[post("/create-lender")]
 pub async fn create_lender(req: web::Json<CreateLenderReq>) -> Result<impl Responder> {
 
   let create_user:Result<Lender, String> = create_lender_query(&req);
@@ -25,7 +25,7 @@ pub async fn create_lender(req: web::Json<CreateLenderReq>) -> Result<impl Respo
 }
 
 
-#[post("/login")]
+#[post("/login-lender")]
 pub async fn login_lender(req: web::Json<LoginLenderReq>) -> Result<impl Responder> {
 
   let login_lender:Result<LoginLenderResp, String> = login_lender_query(&req);

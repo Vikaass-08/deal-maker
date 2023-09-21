@@ -2,7 +2,7 @@ use diesel::pg::PgConnection;
 use diesel::prelude::*;
 use crate::schema::lender::id as lender_ag_id;
 use crate::models;
-use self::models::{NewDocument, Document, DocumentList, Lender};
+use self::models::{NewDocument, Document, Lender};
 use serde::{Serialize, Deserialize};
 use crate::lib::establish_connection;
 
@@ -38,29 +38,16 @@ pub fn create_document_query(doc_data: &str, doc_type: &str, len_id: &i32) -> Re
 }
 
 
-pub fn get_document_query() -> Result<DocumentList, String> {
+pub fn get_document_query(document_id: i32) -> Result<Document, String> {
   use crate::schema::document::dsl::*;
   let conn = &mut establish_connection();
 
-  let total_document =  document
-      .load::<Document>(conn);
+  let documents =  document
+      .filter(id.eq(document_id))
+      .first::<Document>(conn);
 
-  match total_document {
-      Ok(doc_count) => {
-        if doc_count.len() == 0{
-          return Err(String::from("No Agreement to Display!!"));
-        }
-      
-        let results = document
-               .order(id)
-               .limit(10.into())
-               .load::<Document>(conn);
-
-        match results {
-            Ok(value) => Ok(DocumentList {documents: value}),
-            Err(e) => Err(e.to_string())
-        }
-      }
+  match documents {
+      Ok(doc_data) => Ok(doc_data),
       Err(err) => Err(err.to_string())
   }
 }

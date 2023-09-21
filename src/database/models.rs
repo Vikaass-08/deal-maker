@@ -1,4 +1,4 @@
-use crate::schema::{users, lender, document, deal};
+use crate::schema::{users, lender, document, deal, document_request};
 use diesel::prelude::*;
 use serde::{Serialize, Deserialize};
 use diesel::sql_types::*;
@@ -15,11 +15,6 @@ pub struct Document {
   pub document_type: String,
   pub document_data: String,
   pub updated_at: NaiveDateTime
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct DocumentList {
-  pub documents: Vec<Document>
 }
 
 
@@ -97,5 +92,28 @@ pub struct NewDeal<'a> {
     pub lender_id: &'a i32,
     pub user_id: &'a i32,
     pub document_id: &'a i32,
+    pub status: &'a str,
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+
+#[derive(Queryable, Selectable, Serialize, Deserialize, Debug)]
+#[diesel(table_name = document_request)]
+#[diesel(check_for_backend(diesel::pg::Pg))]
+pub struct DocumentRequest {
+  pub id: i32,
+  pub lender_id: i32,
+  pub user_id: i32,
+  pub status: String,
+  pub updated_at: NaiveDateTime
+}
+
+#[derive(Insertable)]
+#[diesel(table_name = document_request)]
+pub struct NewDocumentRequest<'a> {
+    pub lender_id: &'a i32,
+    pub user_id: &'a i32,
     pub status: &'a str,
 }

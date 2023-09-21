@@ -71,3 +71,45 @@ pub struct LoginLenderReq {
 pub struct LoginLenderResp {
     pub jwt_token: String
 }
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#[derive(Serialize, Deserialize)]
+pub struct DocumentRequestUsersAPIReq {
+    pub lender_email: String,
+    pub borrower_email: String,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct DocumentRequestAPIResp {
+    pub lender_email: String,
+    pub borrower_email: String,
+    pub request_status: String,
+    pub created_at: NaiveDateTime
+}
+
+
+
+pub enum DocStatusCode {
+    INITITATED,
+    REJECTED,
+    ACCEPTED
+}
+
+impl ToString for DocStatusCode {
+    fn to_string(&self) -> String {
+        match self {
+            DocStatusCode::INITITATED => String::from("INITITATED"),
+            DocStatusCode::REJECTED => String::from("REJECTED"),
+            DocStatusCode::ACCEPTED => String::from("ACCEPTED"),
+        }
+    }
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct DocumentRequestLenderAPIReq {
+    pub lender_email: String,
+    pub borrower_email: String,
+    pub status: String
+}
