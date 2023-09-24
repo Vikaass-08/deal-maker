@@ -1,27 +1,42 @@
 use diesel::pg::PgConnection;
 use diesel::prelude::*;
-use crate::schema::lender::id as lender_ag_id;
+use crate::{schema::lender::id as lender_ag_id, database::schema::document::lender_email};
 use crate::models;
-use self::models::{NewDocument, Document, Lender};
+use self::models::{NewDocument, Document, Lender, Users};
 use serde::{Serialize, Deserialize};
 use crate::lib::establish_connection;
+use diesel::result::Error as ResultError;
 
-pub fn create_document_query(doc_data: &str, doc_type: &str, len_id: &i32) -> Result<Document, String> {
-  use crate::schema::document;
-  use crate::schema::lender;
+pub struct  ValidCheck {
+  user_check: Result<Users, ResultError>,
+  lender_check: Result<Lender, ResultError>
+}
+
+pub fn create_document_query(doc_data: &str, doc_type: &str, lend_email: &str, user_email: &str) -> Result<Document, String> {
+  use crate::schema::{document, lender, users};
   let conn = &mut establish_connection();
 
-  let lender_output = lender::table
-    .filter(lender_ag_id.eq(len_id))
-    .load::<Lender>(conn);
+  let get_user = users::table 
+        .filter(users::email.eq(user_email))
+        .first::<Users>(conn);
 
-  match lender_output {
-      Ok(get_lender) => {
-        if get_lender.len() == 0 {
-          return Err(String::from("Access denied!!"));
-        }
-      
-        let new_document = NewDocument { document_data: doc_data, document_type: doc_type, lender_id: len_id };
+  let get_lender = lender::table
+      .filter(lender::email.eq(lend_email))
+      .first::<Lender>(conn);
+
+  let valid_check: ValidCheck = ValidCheck {
+      user_check: get_user,
+      lender_check: get_lender
+  };
+
+  match valid_check {
+    ValidCheck {user_check: Ok(user_val), lender_check: Ok(lender_val) } => {
+        let new_document = NewDocument { 
+          document_data: &doc_data, 
+          document_type: &doc_type, 
+          lender_email: &lend_email,
+          user_email: &user_email 
+        };
       
         let output = diesel::insert_into(document::table)
             .values(&new_document)
@@ -33,7 +48,7 @@ pub fn create_document_query(doc_data: &str, doc_type: &str, len_id: &i32) -> Re
             Err(e) => Err(e.to_string()),
         }
       }
-      Err(e) => Err(e.to_string())
+      ValidCheck {user_check, lender_check} => Err(String::from("lender or borrower doesn't exist"))
   }
 }
 

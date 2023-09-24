@@ -34,7 +34,9 @@ pub async fn save_document(req: web::Json<SaveDocumentReq>, req_user: Option<web
             let save_document:Result<Document, String> = create_document_query(
                 &req.document_data.to_string(), 
                 &req.document_type.to_string(), 
-                &req.lender_id
+                &req.lender_email.to_string(),
+                &req.user_email.to_string(),
+
             );
         
             match save_document {

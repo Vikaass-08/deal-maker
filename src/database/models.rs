@@ -11,7 +11,8 @@ use chrono::NaiveDateTime;
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct Document {
   pub id: i32,
-  pub lender_id: i32,
+  pub lender_email: String,
+  pub user_email: String,
   pub document_type: String,
   pub document_data: String,
   pub updated_at: NaiveDateTime
@@ -23,7 +24,8 @@ pub struct Document {
 pub struct NewDocument<'a> {
     pub document_data: &'a str,
     pub document_type: &'a str,
-    pub lender_id: &'a i32
+    pub lender_email: &'a str,
+    pub user_email: &'a str
 }
 
 

@@ -41,7 +41,8 @@ pub struct LoginUserResp {
 pub struct SaveDocumentReq {
     pub document_data: String,
     pub document_type: String,
-    pub lender_id: i32
+    pub lender_email: String,
+    pub user_email: String
 }
 
 
@@ -156,8 +157,8 @@ impl ToString for DealStatusCode {
 
 #[derive(Serialize, Deserialize)]
 pub struct UpdateDealReq {
-    pub lender_id: i32,
-    pub user_id: i32,
+    pub lender_email: String,
+    pub borrower_email: String,
     pub status: String
 }
 
