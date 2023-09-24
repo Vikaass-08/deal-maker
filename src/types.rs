@@ -113,3 +113,57 @@ pub struct DocumentRequestLenderAPIReq {
     pub borrower_email: String,
     pub status: String
 }
+
+#[derive(Serialize, Deserialize)]
+pub struct DocumentRequestLenderAPIGetReq {
+    pub lender_email: String,
+    pub borrower_email: String,
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#[derive(Serialize, Deserialize)]
+pub struct CreateDealReq {
+    pub lender_email: String,
+    pub borrower_email: String,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct CreateDealResp {
+    pub document_id: i32,
+    pub status: String,
+    pub updated_at: NaiveDateTime
+}
+
+pub enum DealStatusCode {
+    CREATED,
+    REJECT,
+    DONE
+}
+
+impl ToString for DealStatusCode {
+    fn to_string(&self) -> String {
+        match self {
+            DealStatusCode::REJECT => String::from("REJECT"),
+            DealStatusCode::DONE => String::from("DONE"),
+            DealStatusCode::CREATED => String::from("CREATED"),
+        }
+    }
+}
+
+
+
+#[derive(Serialize, Deserialize)]
+pub struct UpdateDealReq {
+    pub lender_id: i32,
+    pub user_id: i32,
+    pub status: String
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct UpdateDealResp {
+    pub document_id: i32,
+    pub status: String,
+    pub updated_at: NaiveDateTime
+}

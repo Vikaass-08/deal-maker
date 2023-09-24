@@ -2,7 +2,7 @@ use std::string;
 use actix_web::error::{ErrorUnauthorized, ErrorNotFound};
 use actix_web::{get, post, HttpResponse, Responder, web, Result, error};
 use serde::{Serialize, Deserialize};
-use crate::types::{DocumentRequestUsersAPIReq, DocumentRequestAPIResp, TokenClaims, DocumentRequestLenderAPIReq, DocStatusCode::{REJECTED, ACCEPTED}};
+use crate::types::{DocumentRequestUsersAPIReq, DocumentRequestAPIResp, TokenClaims, DocumentRequestLenderAPIReq, DocStatusCode, DocumentRequestLenderAPIGetReq};
 use crate::database::queries::document_request_queries::{document_request_status_query_users, document_request_status_query_lender};
 
 
@@ -26,10 +26,15 @@ pub async fn user_doc_request_status(req: web::Json<DocumentRequestUsersAPIReq>,
 
 
 #[get("/get-all-request")]
-pub async fn lender_doc_request_status(req: web::Json<DocumentRequestLenderAPIReq>, token_verify: Option<web::ReqData<TokenClaims>>) -> Result<impl Responder> {
+pub async fn lender_doc_request_status(req: web::Json<DocumentRequestLenderAPIGetReq>, token_verify: Option<web::ReqData<TokenClaims>>) -> Result<impl Responder> {
   match token_verify {
     Some(user) => {
-      let save_document:Result<DocumentRequestAPIResp, String> = document_request_status_query_lender(false, &req);
+      let new_req = DocumentRequestLenderAPIReq {
+        lender_email: req.lender_email.clone(),
+        borrower_email: req.borrower_email.clone(),
+        status: DocStatusCode::INITITATED.to_string()
+      };
+      let save_document:Result<DocumentRequestAPIResp, String> = document_request_status_query_lender(false, &new_req);
       match save_document {
         Ok(value) => return Ok(web::Json(value)),
         Err(err) => return Err(ErrorNotFound(err))
@@ -48,7 +53,7 @@ pub async fn lender_update_doc_status(req: web::Json<DocumentRequestLenderAPIReq
   match token_verify {
     Some(user) => {
       let doc_status = req.status.to_uppercase();
-      if !(doc_status == ACCEPTED.to_string() || doc_status == REJECTED.to_string()){
+      if !(doc_status == DocStatusCode::ACCEPTED.to_string() || doc_status == DocStatusCode::REJECTED.to_string()){
         return return Err(ErrorNotFound("Please Enter a valid Status"))
       }
 

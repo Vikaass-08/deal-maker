@@ -5,6 +5,7 @@ pub mod document;
 pub mod borrower;
 pub mod lender;
 pub mod document_request;
+pub mod deal;
 
 #[get("/")]
 async fn hello() -> impl Responder {

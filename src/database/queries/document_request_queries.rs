@@ -16,8 +16,6 @@ pub struct  ValidCheck {
 
 
 
-
-
 pub fn document_request_status_query_users(doc_req: &DocumentRequestUsersAPIReq) -> Result<DocumentRequestAPIResp, String> {
     use crate::schema::{document_request, lender, users};
 	let conn = &mut establish_connection();
@@ -65,7 +63,7 @@ pub fn document_request_status_query_users(doc_req: &DocumentRequestUsersAPIReq)
                                 created_at: val.updated_at 
                             }
                         ),
-                        Err(e) => return Err(e.to_string()),
+                        Err(e) => return Err(String::from("Unable to create document request")),
                     }
                 }
                 Ok(doc_status) => {
@@ -78,7 +76,7 @@ pub fn document_request_status_query_users(doc_req: &DocumentRequestUsersAPIReq)
                         }
                     )
                 },
-                Err(err) => return Err(String::from("Lender of Borrower doesn't exist"))
+                Err(err) => return Err(String::from("Error in Document request"))
             }
 
             return Err(String::from("lender or borrower doesn't exist"));
@@ -119,10 +117,10 @@ pub fn document_request_status_query_lender(update_doc_req_status: bool, doc_req
 
             match get_doc_values {
                 Ok(doc_status) => {
-                    if update_doc_req_status {    
+                    if update_doc_req_status && doc_status.status == DocStatusCode::INITITATED.to_string() {    
                         let update_query = diesel::update(document_request::table)
                             .filter(document_request::lender_id.eq(lender_val.id))
-                            .set(document_request::status.eq(&doc_req.status))
+                            .set(document_request::status.eq(&doc_req.status.to_uppercase()))
                             .get_result::<DocumentRequest>(conn);
 
                         match update_query {
@@ -136,6 +134,16 @@ pub fn document_request_status_query_lender(update_doc_req_status: bool, doc_req
                             ),
                             Err(e) => return Err(e.to_string()),
                         }
+                    }
+                    else {
+                        return Ok(
+                            DocumentRequestAPIResp { 
+                                lender_email: lender_val.email, 
+                                borrower_email: user_val.email, 
+                                request_status: doc_status.status, 
+                                created_at: doc_status.updated_at 
+                            }
+                        )
                     }
 
                 },

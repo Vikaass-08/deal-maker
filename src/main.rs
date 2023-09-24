@@ -10,6 +10,7 @@ use routes::document::{get_document, save_document};
 use routes::borrower::{create_user, login_user};
 use routes::lender::{create_lender, login_lender};
 use routes::document_request::{user_doc_request_status, lender_doc_request_status, lender_update_doc_status};
+use routes::deal::{create_deal, update_deal};
 pub mod types;
 use actix_web_httpauth::middleware::HttpAuthentication;
 use lib::{validator_user, validator_lender};
@@ -24,12 +25,14 @@ async fn main() -> std::io::Result<()> {
             .service(web::scope("/borrower/auth")
                 .wrap(user_token_middleware.clone())
                 .service(user_doc_request_status)
+                .service(create_deal)
             )
             .service(web::scope("/lender/auth")
                 .wrap(lender_token_middleware.clone())
                 .service(save_document)
                 .service(lender_doc_request_status)
                 .service(lender_update_doc_status)
+                .service(update_deal)
             )
             .service(create_user)
             .service(login_user)
