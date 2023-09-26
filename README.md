@@ -14,7 +14,7 @@
 - docker-compose -f docker-compose.yml up -d   (TO create docker image and run in the background)
 - docker stop container_name
 
-    <img width="700" height="500" alt="Database Structure" src="https://github.com/Vikaass-08/deal-maker/assets/59832889/23d752f8-2f88-40c8-a69b-bd1dda9e4b5a">
+    <img width="700" height="500" alt="Database Structure" src="https://github.com/Vikaass-08/deal-maker/assets/59832889/2ca46beb-22bc-4e2a-b1ef-66da2c2a08dc">
 
 ## Environment Variables
 
