@@ -105,7 +105,7 @@ pub fn create_deal_query(deal_req: &CreateDealReq) -> Result<CreateDealResp, Str
 
 
 pub fn update_deal_query(deal_req: &UpdateDealReq) -> Result<UpdateDealResp, String> {
-  use crate::schema::{deal, document_request, users, lender};
+  use crate::schema::{deal, document, users, lender};
   let conn = &mut establish_connection();
 
   let get_user = users::table 
@@ -124,29 +124,28 @@ pub fn update_deal_query(deal_req: &UpdateDealReq) -> Result<UpdateDealResp, Str
   match valid_check {
     ValidCheck {user_check: Ok(user_val), lender_check: Ok(lender_val) } => {
 
-      let document_req_accepted = document_request::table
-        .filter(document_request::lender_id.eq(lender_val.id))
-        .filter(document_request::user_id.eq(user_val.id))
-        .filter(document_request::status.eq(DocStatusCode::ACCEPTED.to_string()))
-        .first::<DocumentRequest>(conn);
+      let document_exists = document::table
+        .filter(document::lender_email.eq(lender_val.email))
+        .filter(document::user_email.eq(user_val.email))
+        .first::<Document>(conn);
   
-      match document_req_accepted {
+      match document_exists {
         Ok(valid_value) => {
-          let deal_output = deal::table
-              .filter(deal::lender_id.eq(valid_value.lender_id))
-              .filter(deal::user_id.eq(valid_value.user_id))
+          let deal_exists = deal::table
+              .filter(deal::lender_id.eq(lender_val.id))
+              .filter(deal::user_id.eq(user_val.id))
               .filter(deal::document_id.eq(valid_value.id))
               .first::<Deal>(conn);
     
-          match deal_output {
+          match deal_exists {
             Ok(deal_data) => {
               let deal_status_val = deal_req.status.to_uppercase();
               if deal_data.status == DealStatusCode::CREATED.to_string() {
                 if deal_status_val == DealStatusCode::DONE.to_string() || deal_status_val == DealStatusCode::REJECT.to_string() {
     
                   let update_query = diesel::update(deal::table)
-                    .filter(deal::lender_id.eq(valid_value.lender_id))
-                    .filter(deal::user_id.eq(valid_value.user_id))
+                    .filter(deal::lender_id.eq(lender_val.id))
+                    .filter(deal::user_id.eq(user_val.id))
                     .filter(deal::document_id.eq(valid_value.id))
                     .set(deal::status.eq(deal_status_val))
                     .get_result::<Deal>(conn);

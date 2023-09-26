@@ -40,7 +40,7 @@ async fn main() -> std::io::Result<()> {
             .service(login_lender)
             .service(web::scope("/test")
                 .wrap(user_token_middleware.clone()) 
-                .service(hello)
+                .service(auth_test)
             )
     })
     .bind(("127.0.0.1", 8080))?
@@ -49,7 +49,7 @@ async fn main() -> std::io::Result<()> {
 }
 
 #[get("/tokenCheck")]
-async fn hello(req_user: Option<web::ReqData<TokenClaims>>) -> impl Responder {
+async fn auth_test(req_user: Option<web::ReqData<TokenClaims>>) -> impl Responder {
     match req_user {
         Some(user) => {
             return HttpResponse::Ok().json("Auth working correctly");

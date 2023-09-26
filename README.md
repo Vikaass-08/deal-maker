@@ -88,26 +88,40 @@ To run this project, you will need to add the following environment variables to
 ```
 
 
-#### Create/Save document
+#### Create document (Auth: Lender)
 
 ```http
   POST /lender/auth/create-document
 ```
 
-#### Create/Get the document request status
+#### Create/Get the document request status (Auth: Borrower)
 
 ```http
   POST /borrower/auth/get-or-create-req
 ```
 
-#### Get the request send by borrower to lender
+#### Get connection req by borrower (Auth: Lender)
 
 ```http
   GET /lender/auth/get-all-request
 ```
 
-#### Update the request send by borrower to lender
+#### Update the connection req by borrower (Auth: Lender)
 
 ```http
   PUT /lender/auth/update-request
+```
+
+
+#### Create a Deal Req (Auth: Borrower)
+
+```http
+  PUT /borrower/auth/create-deal
+```
+
+
+#### Accept or reject the deal (Auth: Lender)
+
+```http
+  PUT /lender/auth/update-deal
 ```
