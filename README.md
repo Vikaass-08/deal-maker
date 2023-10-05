@@ -1,10 +1,17 @@
 
 # Deal Maker
+Transforming Signatures, Elevating Transactions
 
-- It is a premier backend solution dedicated to optimizing the document signing process for lenders and borrowers. 
-- There are 2 kinds of user (BORROWER, LENDER). 
-- Lender can create and make changes in the documents (Before Signing), accept document signing request from a borrower.
-- Borrowers can apply for document Signing for any lenders, once accepted then the signing process takes place.
+![undraw_nakamoto_-2-iv6 2-2](https://github.com/Shreyans13/deal-maker/assets/50544190/17677670-9ac5-4dd6-aac5-9de1d0d93071)
+
+
+Introducing **Deal Maker**, the leading backend solution meticulously designed to streamline the document signing process for both lenders and borrowers. Our platform caters to two distinct user roles: BORROWER and LENDER, each equipped with specialized functionalities to enhance their document management experience.
+
+For **LENDERS**, Deal Maker provides a comprehensive suite of tools, allowing them to seamlessly create and modify documents before the crucial signing stage. Lenders can effortlessly accept document signing requests initiated by borrowers, ensuring a smooth and efficient collaboration throughout the process.
+
+On the other side, **BORROWERS** benefit from a user-friendly interface that enables them to apply for document signing with any preferred lender. Once a lending partner accepts the request, the signing process kicks into gear, providing a secure and convenient environment for all parties involved.
+
+**Deal Maker** is not just a platform; it's a premier solution dedicated to optimizing and elevating the document signing experience for lenders and borrowers alike. Experience a new standard of efficiency and collaboration in the world of document management with Deal Maker.
 
 
 ## Postgres DB images through Docker
